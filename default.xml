@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  OnePlus 11R (udon) — LineageOS 23.2 / Android 16 bring-up
+  Composite tree: all repos under github.com/rocko5498, branch lineage-23.2-udon
+  Base forks: saif-sohel (device/kernel/hardware), ICECOLD90191 (vendor blobs),
+  Miku-UI (audio primary-hal), LineageOS (qcom opensource) — see each repo's
+  commit message for exact provenance. Blobs refreshed from live CPH2487
+  OxygenOS 16.0.5.1002 device dump (2026-07-23).
+
+  Usage: place in .repo/local_manifests/ of a LineageOS 23.2 checkout.
+-->
+<manifest>
+  <remote name="rocko" fetch="https://github.com/rocko5498" revision="lineage-23.2-udon" />
+
+  <!-- device trees -->
+  <project path="device/oneplus/udon" name="android_device_oneplus_udon" remote="rocko" />
+  <project path="device/oneplus/sm8450-common" name="android_device_oneplus_sm8450-common" remote="rocko" />
+
+  <!-- kernel: source + prebuilt module/devicetree repos come from upstream forks (unmodified ones) -->
+  <project path="kernel/oneplus/sm8450" name="android_kernel_oneplus_sm8450" remote="rocko" />
+  <project path="kernel/oneplus/sm8450-modules" name="android_kernel_oneplus_sm8450-modules" remote="opudon" />
+  <project path="kernel/oneplus/sm8450-devicetrees" name="android_kernel_oneplus_sm8450-devicetrees" remote="quickman" />
+  <project path="hardware/dolby" name="hardware_dolby" remote="icecold" />
+
+  <!-- oplus hardware -->
+  <project path="hardware/oplus" name="hardware_oplus" remote="rocko" />
+
+  <!-- vendor blobs (OOS 16.0.5.1002-refreshed) -->
+  <project path="vendor/oneplus/udon" name="android_vendor_oneplus_udon" remote="rocko" />
+  <project path="vendor/oneplus/sm8450-common" name="proprietary_vendor_oneplus_sm8450-common" remote="rocko" />
+
+  <!-- patched qcom opensource (replace LineageOS defaults) -->
+  <remove-project name="LineageOS/android_vendor_qcom_opensource_agm" />
+  <remove-project name="LineageOS/android_vendor_qcom_opensource_arpal-lx" />
+  <remove-project name="LineageOS/android_vendor_qcom_opensource_interfaces" />
+  <project path="vendor/qcom/opensource/agm" name="android_vendor_qcom_opensource_agm" remote="rocko" />
+  <project path="vendor/qcom/opensource/arpal-lx" name="android_vendor_qcom_opensource_arpal-lx" remote="rocko" />
+  <project path="vendor/qcom/opensource/interfaces" name="android_vendor_qcom_opensource_interfaces" remote="rocko" />
+
+  <!-- patched caf audio checkouts (same repos, caf branch) -->
+  <project path="hardware/qcom-caf/sm8450/audio/agm" name="android_vendor_qcom_opensource_agm" remote="rocko" revision="lineage-23.2-udon-caf-sm8450" />
+  <project path="hardware/qcom-caf/sm8450/audio/pal" name="android_vendor_qcom_opensource_arpal-lx" remote="rocko" revision="lineage-23.2-udon-caf-sm8450" />
+  <project path="hardware/qcom-caf/sm8450/audio/primary-hal" name="platform_hardware_qcom-caf_sm8450_audio_primary-hal" remote="rocko" />
+
+  <!-- upstream fork remotes for unmodified companion repos -->
+  <remote name="opudon" fetch="https://github.com/opudon" revision="14" />
+  <remote name="quickman" fetch="https://github.com/quickman1001" revision="HEAD" />
+  <remote name="icecold" fetch="https://github.com/ICECOLD90191" revision="HEAD" />
+</manifest>
