@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Local manifest for OnePlus 11R (udon) — LineageOS 23 / Android 16 composite tree.
+  Source provenance and rationale documented in ../CLAUDE.md and REBUILD-PLAN.md —
+  do not edit remotes/revisions here without updating those too.
+
+  REVISION (2026-07-24): the ICECOLD90191 "A16" trees below (device/vendor/kernel/
+  hardware.oplus) build clean but DO NOT BOOT, per that tree's own maintainer,
+  confirmed directly to the project owner. Switched to the Udon-F-up org's trees
+  (branch A16-wip), which carry explicit "Bootable a16 changes" commits and fix
+  most of the maintainer's own known-bug list (touch, alert slider, IR, haptics,
+  brightness). kernel/oneplus/sm8450-{modules,devicetrees} come from pjgowtham
+  instead — the org's own copies of those two repos are empty (0 KB, zero refs) —
+  proven correct via commit 9889da64 "pj kernel changes" in the common tree, which
+  rewrote BoardConfigCommon.mk to exactly pjgowtham's kernel layout the same day
+  the org's kernel repo was created. hardware/oplus comes from LineageOS's own
+  lineage-23.2 branch (base manifest doesn't carry it; Udon-F-up doesn't ship it
+  either). hardware/dolby is UNCHANGED (still ICECOLD90191 — no replacement found
+  in Udon-F-up, out of scope for this pivot).
+
+  The Miku-UI primary-hal override + its <remove-project> of LineageOS's own
+  audio-ar are DROPPED entirely: the new common tree's Android.bp imports only
+  vendor/oneplus/sm8450-common (verified), so the base manifest's own audio-ar
+  is sufficient and the override that caused most of the old build's audio
+  duplicate-module errors is no longer needed.
+
+  Full reasoning, evidence, and what NOT to re-apply: REBUILD-PLAN.md, TASKS.md.
+-->
+<manifest>
+
+  <!-- Remotes -->
+  <remote name="icecold90191-gh" fetch="https://github.com/ICECOLD90191" />
+  <remote name="icecold90191-gl" fetch="https://gitlab.com/ICECOLD90191" />
+  <remote name="udonfup" fetch="ssh://git@github.com/Udon-F-up" />
+  <remote name="pjgowtham-gh" fetch="https://github.com/pjgowtham" />
+
+  <!-- Device trees. A16-wip carries the "Bootable a16 changes" commits. -->
+  <project path="device/oneplus/udon" name="device_oneplus_udon" remote="udonfup" revision="A16-wip" />
+  <project path="device/oneplus/sm8450-common" name="device_oneplus_sm8450-common" remote="udonfup" revision="A16-wip" />
+
+  <!-- Kernel. lineage-23.2 is the only Udon-F-up kernel branch touched in 2026. -->
+  <project path="kernel/oneplus/sm8450" name="kernel_oneplus_sm8450" remote="udonfup" revision="lineage-23.2" />
+
+  <!-- Kernel modules + devicetrees: NOT from Udon-F-up (that repo is empty).
+       pjgowtham authored most of the kernel history; Udon-F-up's kernel IS
+       pjgowtham's lineage-23.2 (SUBLEVEL 246) plus 2 commits — see REVISION note
+       above. Public repos, plain https, no SSH needed. -->
+  <project path="kernel/oneplus/sm8450-modules" name="android_kernel_oneplus_sm8450-modules" remote="pjgowtham-gh" revision="lineage-23.2" />
+  <project path="kernel/oneplus/sm8450-devicetrees" name="android_kernel_oneplus_sm8450-devicetrees" remote="pjgowtham-gh" revision="lineage-23.2" />
+
+  <!-- Hardware. hardware/oplus from pjgowtham's own fork, per ICECOLD (author of
+       most of the udon-f-up tree's actual working config) - his fork is what the
+       real bootable udon-f-up build uses, not LineageOS's generic upstream copy.
+       Confirmed structurally identical layout + same collision-prone AIDL flags,
+       plus his own additions (fingerprint AIDL shim, sensors ALS work) not present
+       in LineageOS's copy. hardware/dolby UNCHANGED. -->
+  <project path="hardware/oplus" name="android_hardware_oplus" remote="pjgowtham-gh" revision="lineage-23.2" />
+  <project path="hardware/dolby" name="hardware_dolby" remote="icecold90191-gh" revision="A16" />
+
+  <!-- Vendor (proprietary blobs). Udon-F-up's own curated blob set — commits
+       "Kill more _platform blobs" / "Remove more _platform" / "Bootable a16
+       changes" — NOT ICECOLD90191's GitLab dump anymore. -->
+  <project path="vendor/oneplus/udon" name="vendor_oneplus_udon" remote="udonfup" revision="A16-wip" />
+  <project path="vendor/oneplus/sm8450-common" name="vendor_oneplus_sm8450-common" remote="udonfup" revision="A16-wip" />
+
+  <!-- hardware/qcom-caf/sm8450/audio/primary-hal: intentionally NOT overridden.
+       No <remove-project> of LineageOS/android_hardware_qcom_audio-ar here, so
+       the LineageOS 23.2 base manifest's own copy applies at this path. -->
+
+
+  <!-- Other chipsets audio primary-hal (kailua/sm8550, pineapple/sm8650, sun/sm8750):
+       NOT our device. Over-synced by the tuned repo sync but left half-checked-out
+       (same repo name as our sm8450 primary-hal, name-collision). They break
+       `repo manifest -r` (build-manifest.xml) which rev-parses every declared
+       project. Remove BY PATH only (name is shared with our sm8450 one). -->
+  <remove-project path="hardware/qcom-caf/sm8550/audio/primary-hal" optional="true" />
+  <remove-project path="hardware/qcom-caf/sm8650/audio/primary-hal" optional="true" />
+  <remove-project path="hardware/qcom-caf/sm8750/audio/primary-hal" optional="true" />
+
+</manifest>
