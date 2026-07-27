@@ -1,73 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  OnePlus 11R (udon) - LineageOS 23.2 / Android 16
-  Stack: Quantom2 device-common + kernel, lineage-ovaltine-dev vendor blobs.
-
-  Sources confirmed by the project owner 2026-07-25:
-    https://gitlab.com/lineage-ovaltine-dev/proprietary_vendor_oneplus/sm8450-common
-    https://github.com/Quantom2/android_device_oneplus_sm8450-common-new/tree/lineage-23.2-new-kmod
-    https://github.com/Quantom2/android_device_realme_senna/tree/lineage-23.2   (reference tree + patches/apply.sh)
-    https://github.com/lineage-ovaltine-dev
-
-  Notes:
-  - Quantom2's kernel is a FORK of lineage-ovaltine-dev/android_kernel_oneplus_sm8450.
-    Its include/soc/oplus/{boot,dft} are SYMLINKS into a sibling repo
-    kernel/oneplus/gki-modules, so that repo MUST be synced or
-    generated_kernel_includes fails. Source: lineage-ovaltine-dev/
-    android_oneplus_kernel_gki-modules (only branch: lineage-23.2).
-  - hardware/oplus stays on pjgowtham per Quantom2 ("use lineage one or
-    pjgowtham one, doesn't matter"). Local fixes live there - do not re-point
-    without re-applying them.
-  - device/oneplus/udon + vendor/oneplus/udon stay on Udon-F-up A16-wip: no
-    Quantom2/ovaltine equivalent exists for the udon device tree itself.
-  - senna patches/apply.sh carries the ACDB fix (LineageOS gerrit 417220,
-    "agm: Support sku agnostic acdb odm path" by pjgowtham) plus the SDM/IRIS
-    repopicks - apply separately, not via manifest.
+  OnePlus 11R (udon / CPH2487) — first successful Arman-common build.
+  LineageOS 23.2 / Android 16. Every project is pinned to the exact commit
+  used for lineage-23.2-20260727-UNOFFICIAL-udon.zip.
 -->
 <manifest>
-  <remote name="udonfup" fetch="ssh://git@github.com/Udon-F-up" />
-  <remote name="pjgowtham-gh" fetch="https://github.com/pjgowtham" />
-  <remote name="quantom2-gh" fetch="https://github.com/Quantom2" />
-  <remote name="ovaltine-gh" fetch="https://github.com/lineage-ovaltine-dev" />
-  <remote name="ovaltine-gl" fetch="https://gitlab.com/lineage-ovaltine-dev/proprietary_vendor_oneplus" />
-  <remote name="lineage" fetch="https://github.com/LineageOS" />
+  <remote name="rocko" fetch="https://github.com/rocko5498" />
+  <remote name="arman" fetch="https://github.com/Arman-ATI" />
+  <remote name="pjgowtham" fetch="https://github.com/pjgowtham" />
 
-  <!-- Device trees -->
+  <remove-project path="build/soong" />
+  <project path="build/soong"
+           name="android_build_soong"
+           remote="rocko"
+           revision="50d4a864c38c5f409defe8c041ef2c944bcdc17e" />
+
   <project path="device/oneplus/udon"
-           name="device_oneplus_udon"
-           remote="udonfup" revision="A16-wip" />
+           name="android_device_oneplus_udon"
+           remote="rocko"
+           revision="b4421de25094b1c413c737eb50e082f7860a29ff" />
   <project path="device/oneplus/sm8450-common"
-           name="android_device_oneplus_sm8450-common-new"
-           remote="quantom2-gh" revision="lineage-23.2-new-kmod" />
+           name="android_device_oneplus_sm8450-common"
+           remote="rocko"
+           revision="81e1d9ac6fcf206f7acab80b2c4635044caaac03" />
 
-  <!-- Vendor blobs -->
   <project path="vendor/oneplus/udon"
-           name="vendor_oneplus_udon"
-           remote="udonfup" revision="A16-wip" />
+           name="android_vendor_oneplus_udon"
+           remote="rocko"
+           revision="d2b7ad0e82f6e10c21ebbd1949844a273e59711c" />
   <project path="vendor/oneplus/sm8450-common"
-           name="sm8450-common"
-           remote="ovaltine-gl" revision="lineage-23.2" />
+           name="proprietary_vendor_oneplus_sm8450-common"
+           remote="rocko"
+           revision="3bb7999334373ef3959efcf65fd2f1e7bee1c864" />
 
-  <!-- Kernel: Quantom2's (fork of lineage-ovaltine-dev's) + required gki-modules sibling -->
   <project path="kernel/oneplus/sm8450"
            name="android_kernel_oneplus_sm8450"
-           remote="ovaltine-gh" revision="lineage-23.2" />
-  <project path="kernel/oneplus/gki-modules"
-           name="android_oneplus_kernel_gki-modules"
-           remote="ovaltine-gh" revision="lineage-23.2" />
-  <project path="kernel/oneplus/sm8450-devicetrees"
-           name="android_kernel_oneplus_sm8450-devicetrees"
-           remote="pjgowtham-gh" revision="lineage-23.2" />
+           remote="rocko"
+           revision="7669ea3eea6dcc83be271add1745bbc858a9809e" />
   <project path="kernel/oneplus/sm8450-modules"
            name="android_kernel_oneplus_sm8450-modules"
-           remote="ovaltine-gh" revision="lineage-23.2" />
+           remote="pjgowtham"
+           revision="ca1104519fcb7e769129e75458a9da4833bcc751" />
+  <project path="kernel/oneplus/sm8450-devicetrees"
+           name="android_kernel_oneplus_sm8450-devicetrees"
+           remote="pjgowtham"
+           revision="d8f3eb3fe8f98facd9669aa97d1247f6580e1e58" />
 
-  <!-- Hardware -->
   <project path="hardware/oplus"
            name="android_hardware_oplus"
-           remote="pjgowtham-gh" revision="lineage-23.2" />
+           remote="arman"
+           revision="45a51fafda4a5cd5aed3321646fdf5bab5421a19" />
 
-  <!-- Other chipsets' audio primary-hal: not our device, break `repo manifest -r`. -->
   <remove-project path="hardware/qcom-caf/sm8450-6.6/audio/primary-hal" optional="true" />
   <remove-project path="hardware/qcom-caf/sm8550/audio/primary-hal" optional="true" />
   <remove-project path="hardware/qcom-caf/sm8650/audio/primary-hal" optional="true" />
