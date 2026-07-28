@@ -7,6 +7,7 @@
   <remote name="rocko" fetch="https://github.com/rocko5498" />
   <remote name="arman" fetch="https://github.com/Arman-ATI" />
   <remote name="pjgowtham" fetch="https://github.com/pjgowtham" />
+  <remote name="icecold" fetch="https://github.com/ICECOLD90191" />
 
   <remove-project path="build/soong" />
   <project path="build/soong"
@@ -61,6 +62,10 @@
            name="android_hardware_oplus"
            remote="arman"
            revision="45a51fafda4a5cd5aed3321646fdf5bab5421a19" />
+  <project path="hardware/dolby"
+           name="hardware_dolby"
+           remote="icecold"
+           revision="69bb9888e6e36f35d3d2f2d1e67840eefc3433ad" />
 
   <remove-project path="hardware/qcom-caf/sm8450-6.6/audio/primary-hal" optional="true" />
   <remove-project path="hardware/qcom-caf/sm8550/audio/primary-hal" optional="true" />
