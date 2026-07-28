@@ -26,8 +26,34 @@
            name="android_hardware_qcom-caf_common"
            remote="rocko"
            revision="006226efcac53a0258b27a9d3a1ab58c0397a14e">
+    <linkfile src="os_pickup_aosp.mk"
+              dest="hardware/qcom/Android.mk" />
     <linkfile src="os_pickup_sepolicy_vndr.mk"
               dest="device/qcom/sepolicy_vndr/SEPolicy.mk" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/msm8953/Android.bp" />
+    <linkfile src="os_pickup.bp"
+              dest="hardware/qcom-caf/msm8998/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sdm660/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sdm845/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sm8150/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sm8250/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sm8350/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sm8450/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sm8450-6.6/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sm8550/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sm8650/Android.bp" />
+    <linkfile src="os_pickup_qssi.bp"
+              dest="hardware/qcom-caf/sm8750/Android.bp" />
   </project>
 
   <project path="device/oneplus/udon"
