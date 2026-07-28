@@ -1,49 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  OnePlus 11R (udon) — LineageOS 23.2 / Android 16 bring-up
-  Composite tree: all repos under github.com/rocko5498, branch lineage-23.2-udon
-  Base forks: saif-sohel (device/kernel/hardware), ICECOLD90191 (vendor blobs),
-  Miku-UI (audio primary-hal), LineageOS (qcom opensource) — see each repo's
-  commit message for exact provenance. Blobs refreshed from live CPH2487
-  OxygenOS 16.0.5.1002 device dump (2026-07-23).
-
-  Usage: place in .repo/local_manifests/ of a LineageOS 23.2 checkout.
+  OnePlus 11R (udon / CPH2487) — LineageOS 23.2 / Android 16.
+  Exact source set for the post-20260727 NFC rebuild.
 -->
 <manifest>
-  <remote name="rocko" fetch="https://github.com/rocko5498" revision="lineage-23.2-udon" />
+  <remote name="rocko" fetch="https://github.com/rocko5498" />
+  <remote name="arman" fetch="https://github.com/Arman-ATI" />
+  <remote name="pjgowtham" fetch="https://github.com/pjgowtham" />
 
-  <!-- device trees -->
-  <project path="device/oneplus/udon" name="android_device_oneplus_udon" remote="rocko" />
-  <project path="device/oneplus/sm8450-common" name="android_device_oneplus_sm8450-common" remote="rocko" />
+  <remove-project path="build/soong" />
+  <project path="build/soong"
+           name="android_build_soong"
+           remote="rocko"
+           revision="50d4a864c38c5f409defe8c041ef2c944bcdc17e" />
 
-  <!-- kernel: source + prebuilt module/devicetree repos come from upstream forks (unmodified ones) -->
-  <project path="kernel/oneplus/sm8450" name="android_kernel_oneplus_sm8450" remote="rocko" />
-  <project path="kernel/oneplus/sm8450-modules" name="android_kernel_oneplus_sm8450-modules" remote="opudon" />
-  <project path="kernel/oneplus/sm8450-devicetrees" name="android_kernel_oneplus_sm8450-devicetrees" remote="quickman" />
-  <project path="hardware/dolby" name="hardware_dolby" remote="icecold" />
+  <remove-project path="hardware/qcom-caf/sm8450/audio/agm" />
+  <project path="hardware/qcom-caf/sm8450/audio/agm"
+           name="android_vendor_qcom_opensource_agm"
+           remote="rocko"
+           revision="e8979ae1d2cf58b2b477ff24f047fa667ec43b11" />
 
-  <!-- oplus hardware -->
-  <project path="hardware/oplus" name="hardware_oplus" remote="rocko" />
+  <remove-project path="hardware/qcom-caf/common" />
+  <project path="hardware/qcom-caf/common"
+           name="android_hardware_qcom-caf_common"
+           remote="rocko"
+           revision="006226efcac53a0258b27a9d3a1ab58c0397a14e" />
 
-  <!-- vendor blobs (OOS 16.0.5.1002-refreshed) -->
-  <project path="vendor/oneplus/udon" name="android_vendor_oneplus_udon" remote="rocko" />
-  <project path="vendor/oneplus/sm8450-common" name="proprietary_vendor_oneplus_sm8450-common" remote="rocko" />
+  <project path="device/oneplus/udon"
+           name="android_device_oneplus_udon"
+           remote="rocko"
+           revision="3d488a52f309a8febe940c67faf3deaa64600b9d" />
+  <project path="device/oneplus/sm8450-common"
+           name="android_device_oneplus_sm8450-common"
+           remote="rocko"
+           revision="2ff212ddace121b374e63eb956817422c953f339" />
 
-  <!-- patched qcom opensource (replace LineageOS defaults) -->
-  <remove-project name="LineageOS/android_vendor_qcom_opensource_agm" />
-  <remove-project name="LineageOS/android_vendor_qcom_opensource_arpal-lx" />
-  <remove-project name="LineageOS/android_vendor_qcom_opensource_interfaces" />
-  <project path="vendor/qcom/opensource/agm" name="android_vendor_qcom_opensource_agm" remote="rocko" />
-  <project path="vendor/qcom/opensource/arpal-lx" name="android_vendor_qcom_opensource_arpal-lx" remote="rocko" />
-  <project path="vendor/qcom/opensource/interfaces" name="android_vendor_qcom_opensource_interfaces" remote="rocko" />
+  <project path="vendor/oneplus/udon"
+           name="android_vendor_oneplus_udon"
+           remote="rocko"
+           revision="d2b7ad0e82f6e10c21ebbd1949844a273e59711c" />
+  <project path="vendor/oneplus/sm8450-common"
+           name="proprietary_vendor_oneplus_sm8450-common"
+           remote="rocko"
+           revision="b864de7521c0ddce99152a2912c3ca6620149a02" />
 
-  <!-- patched caf audio checkouts (same repos, caf branch) -->
-  <project path="hardware/qcom-caf/sm8450/audio/agm" name="android_vendor_qcom_opensource_agm" remote="rocko" revision="lineage-23.2-udon-caf-sm8450" />
-  <project path="hardware/qcom-caf/sm8450/audio/pal" name="android_vendor_qcom_opensource_arpal-lx" remote="rocko" revision="lineage-23.2-udon-caf-sm8450" />
-  <project path="hardware/qcom-caf/sm8450/audio/primary-hal" name="platform_hardware_qcom-caf_sm8450_audio_primary-hal" remote="rocko" />
+  <project path="kernel/oneplus/sm8450"
+           name="android_kernel_oneplus_sm8450"
+           remote="rocko"
+           revision="7669ea3eea6dcc83be271add1745bbc858a9809e" />
+  <project path="kernel/oneplus/sm8450-modules"
+           name="android_kernel_oneplus_sm8450-modules"
+           remote="pjgowtham"
+           revision="ca1104519fcb7e769129e75458a9da4833bcc751" />
+  <project path="kernel/oneplus/sm8450-devicetrees"
+           name="android_kernel_oneplus_sm8450-devicetrees"
+           remote="pjgowtham"
+           revision="d8f3eb3fe8f98facd9669aa97d1247f6580e1e58" />
 
-  <!-- upstream fork remotes for unmodified companion repos -->
-  <remote name="opudon" fetch="https://github.com/opudon" revision="14" />
-  <remote name="quickman" fetch="https://github.com/quickman1001" revision="HEAD" />
-  <remote name="icecold" fetch="https://github.com/ICECOLD90191" revision="HEAD" />
+  <project path="hardware/oplus"
+           name="android_hardware_oplus"
+           remote="arman"
+           revision="45a51fafda4a5cd5aed3321646fdf5bab5421a19" />
+
+  <remove-project path="hardware/qcom-caf/sm8450-6.6/audio/primary-hal" optional="true" />
+  <remove-project path="hardware/qcom-caf/sm8550/audio/primary-hal" optional="true" />
+  <remove-project path="hardware/qcom-caf/sm8650/audio/primary-hal" optional="true" />
+  <remove-project path="hardware/qcom-caf/sm8750/audio/primary-hal" optional="true" />
 </manifest>
