@@ -25,7 +25,10 @@
   <project path="hardware/qcom-caf/common"
            name="android_hardware_qcom-caf_common"
            remote="rocko"
-           revision="006226efcac53a0258b27a9d3a1ab58c0397a14e" />
+           revision="006226efcac53a0258b27a9d3a1ab58c0397a14e">
+    <linkfile src="os_pickup_sepolicy_vndr.mk"
+              dest="device/qcom/sepolicy_vndr/SEPolicy.mk" />
+  </project>
 
   <project path="device/oneplus/udon"
            name="android_device_oneplus_udon"
