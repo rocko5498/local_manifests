@@ -36,6 +36,13 @@ choices include:
 - Arman Oplus hardware tree
 - pinned Soong, Qualcomm common, AGM, and Dolby dependencies
 
+Every project declared by this manifest is hosted publicly under
+`github.com/rocko5498`. The modules, device-tree, Oplus hardware, and Dolby
+repositories are GitHub forks retaining the exact upstream commits used by the
+tested build. The Dolby checkout is retained for exact source-environment
+parity, although the final build log does not show modules being consumed from
+that repository.
+
 ## Build
 
 Start from a clean LineageOS 23.2 checkout, copy `default.xml` into

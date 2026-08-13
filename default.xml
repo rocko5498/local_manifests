@@ -5,9 +5,6 @@
 -->
 <manifest>
   <remote name="rocko" fetch="https://github.com/rocko5498" />
-  <remote name="arman" fetch="https://github.com/Arman-ATI" />
-  <remote name="pjgowtham" fetch="https://github.com/pjgowtham" />
-  <remote name="icecold" fetch="https://github.com/ICECOLD90191" />
 
   <remove-project path="build/soong" />
   <project path="build/soong"
@@ -82,20 +79,20 @@
            revision="7669ea3eea6dcc83be271add1745bbc858a9809e" />
   <project path="kernel/oneplus/sm8450-modules"
            name="android_kernel_oneplus_sm8450-modules"
-           remote="pjgowtham"
+           remote="rocko"
            revision="ca1104519fcb7e769129e75458a9da4833bcc751" />
   <project path="kernel/oneplus/sm8450-devicetrees"
            name="android_kernel_oneplus_sm8450-devicetrees"
-           remote="pjgowtham"
+           remote="rocko"
            revision="d8f3eb3fe8f98facd9669aa97d1247f6580e1e58" />
 
   <project path="hardware/oplus"
            name="android_hardware_oplus"
-           remote="arman"
+           remote="rocko"
            revision="45a51fafda4a5cd5aed3321646fdf5bab5421a19" />
   <project path="hardware/dolby"
            name="hardware_dolby"
-           remote="icecold"
+           remote="rocko"
            revision="69bb9888e6e36f35d3d2f2d1e67840eefc3433ad" />
 
   <remove-project path="hardware/qcom-caf/sm8450-6.6/audio/primary-hal" optional="true" />
